@@ -7,6 +7,6 @@ ldc2 \
 	-d-debug -g -unittest \
 	-L-lpython3.5m \
 	-of tok \
-	tok.d snobject.d pyport.d
+	tok.d snobject.d
 
 ./tok

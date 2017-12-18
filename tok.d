@@ -1,26 +1,21 @@
 import std.stdio;
 
-alias long C_long;
-alias int Py_ssize_t;
-
 struct PyObject {
-        Py_ssize_t ob_refcnt;
+        int ob_refcnt;
         PyTypeObject* ob_type;
 }
 
-/// _
 struct PyVarObject {
 	PyObject ob_base;
-	Py_ssize_t ob_size; 
+	int ob_size; 
 }
 
-/// _
 alias int function() setattrfunc;
-/// _
+
 struct PyTypeObject {
     PyVarObject ob_base;
     const(char)* tp_name;
-    Py_ssize_t tp_basicsize, tp_itemsize;
+    int tp_basicsize, tp_itemsize;
 
     setattrfunc tp_dealloc;
     setattrfunc tp_print;
@@ -40,16 +35,13 @@ struct PyTypeObject {
     setattrfunc tp_setattro;
 
     void* tp_as_buffer;
-    C_long tp_flags;
+    long tp_flags;
 
 }
 
 void main() 
 {
-	writeln("tacos");
-	// DustMiteNoRemoveStart
-	assert(PyTypeObject.tp_as_buffer.offsetof == 80);
-	assert(PyTypeObject.tp_as_buffer.sizeof == 4);
-	assert(PyTypeObject.tp_flags.offsetof == 88);
-	// DustMiteNoRemoveStop
+	writefln("tp_as_buffer offset: %s", PyTypeObject.tp_as_buffer.offsetof);
+	writefln("tp_as_buffer size: %s", PyTypeObject.tp_as_buffer.sizeof);
+	writefln("tp_flags offset: %s", PyTypeObject.tp_flags.offsetof);
 }

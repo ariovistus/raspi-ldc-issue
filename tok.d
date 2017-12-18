@@ -2,7 +2,6 @@ import std.stdio;
 
 alias long C_long;
 alias int Py_ssize_t;
-alias Py_ssize_t Py_hash_t;
 
 struct PyObject {
         Py_ssize_t ob_refcnt;
@@ -16,65 +15,31 @@ struct PyVarObject {
 }
 
 /// _
-alias PyObject* ternaryfunc;
-struct PyNumberMethods {
-}
-
-/// _
-struct PySequenceMethods {
-}
-
-/// _
-struct PyMappingMethods {
-}
-
-    /// _
-    struct PyAsyncMethods {
-    }
-/// _
-struct PyBufferProcs {
-}
-
-
-/// _
-alias void function() destructor;
-/// _
-alias int function() printfunc;
-/// _
-alias PyObject* getattrfunc;
-/// _
-alias PyObject* getattrofunc;
-/// _
 alias int function() setattrfunc;
 /// _
-alias int function() setattrofunc;
-/// _
-alias PyObject* reprfunc;
-/// _
-alias Py_hash_t function() hashfunc;
 struct PyTypeObject {
-            PyVarObject ob_base;
+    PyVarObject ob_base;
     const(char)* tp_name;
     Py_ssize_t tp_basicsize, tp_itemsize;
 
-    destructor tp_dealloc;
-    printfunc tp_print;
-    getattrfunc tp_getattr;
+    setattrfunc tp_dealloc;
+    setattrfunc tp_print;
+    setattrfunc tp_getattr;
     setattrfunc tp_setattr;
-        PyAsyncMethods* tp_as_async;
-    reprfunc tp_repr;
+    void* tp_as_async;
+    setattrfunc tp_repr;
 
-    PyNumberMethods* tp_as_number;
-    PySequenceMethods* tp_as_sequence;
-    PyMappingMethods* tp_as_mapping;
+    void* tp_as_number;
+    void* tp_as_sequence;
+    void* tp_as_mapping;
 
-    hashfunc tp_hash;
-    ternaryfunc tp_call;
-    reprfunc tp_str;
-    getattrofunc tp_getattro;
-    setattrofunc tp_setattro;
+    setattrfunc tp_hash;
+    setattrfunc tp_call;
+    setattrfunc tp_str;
+    setattrfunc tp_getattro;
+    setattrfunc tp_setattro;
 
-    PyBufferProcs* tp_as_buffer;
+    void* tp_as_buffer;
     C_long tp_flags;
 
 }

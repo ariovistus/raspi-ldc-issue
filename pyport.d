@@ -1,7 +1,4 @@
-/**
-  Mirror _pyport.h
-  */
-module deimos.python.pyport;
+module pyport;
 
 /// _
     alias long C_long;

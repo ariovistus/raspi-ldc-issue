@@ -1,53 +1,6 @@
-/**
-  Mirror _object.h
+module snobject;
 
-Object and type object interface
-
-Objects are structures allocated on the heap.  Special rules apply to
-the use of objects to ensure they are properly garbage-collected.
-Objects are never allocated statically or on the stack; they must be
-accessed through special macros and functions only.  (Type objects are
-exceptions to the first rule; the standard types are represented by
-statically initialized type objects, although work on type/class unification
-for Python 2.2 made it possible to have heap-allocated type objects too).
-
-An object has a 'reference count' that is increased or decreased when a
-pointer to the object is copied or deleted; when the reference count
-reaches zero there are no references to the object left and it can be
-removed from the heap.
-
-An object has a 'type' that determines what it represents and what kind
-of data it contains.  An object's type is fixed when it is created.
-Types themselves are represented as objects; an object contains a
-pointer to the corresponding type object.  The type itself has a type
-pointer pointing to the object representing the type 'type', which
-contains a pointer to itself!).
-
-Objects do not float around in memory; once allocated an object keeps
-the same size and address.  Objects that must hold variable-size data
-can contain pointers to variable-size parts of the object.  Not all
-objects of the same type have the same size; but the size cannot change
-after allocation.  (These restrictions are made so a reference to an
-object can be simply a pointer -- moving an object would require
-updating all the pointers, and changing an object's size would require
-moving it if there was another object right next to it.)
-
-Objects are always accessed through pointers of the type 'PyObject *'.
-The type 'PyObject' is a structure that only contains the reference count
-and the type pointer.  The actual memory allocated for an object
-contains other data that can only be accessed after casting the pointer
-to a pointer to a longer structure type.  This longer type must start
-with the reference count and type fields; the macro PyObject_HEAD should be
-used for this (to accommodate for future changes).  The implementation
-of a particular object type can cast the object pointer to the proper
-type and back.
-
-A standard interface exists for objects that contain an array of items
-whose size is determined when the object is allocated.
-  */
-module deimos.python.object;
-
-import deimos.python.pyport;
+import pyport;
 /** Nothing is actually declared to be a PyObject, but every pointer to
  * a Python object can be cast to a PyObject*.  This is inheritance built
  * by hand.  Similarly every pointer to a variable-size Python object can,

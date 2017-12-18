@@ -1,4 +1,4 @@
-import deimos.python.object;
+import snobject;
 import std.stdio;
 void main() 
 {
